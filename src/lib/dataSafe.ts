@@ -56,6 +56,7 @@ function buildPayload(data: StoredData, config: DataSafeConfig) {
     },
     version: CURRENT_DATA_VERSION,
     festivals: data.festivals,
+    settings: data.settings,
   }
 }
 

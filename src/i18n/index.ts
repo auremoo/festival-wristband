@@ -12,12 +12,14 @@ i18n
       en: { translation: en },
       fr: { translation: fr },
     },
-    fallbackLng: 'fr',
+    // English is the default. The stored preference (localStorage / the app's
+    // JSON `settings.language`, applied by FestivalsContext) overrides it.
+    fallbackLng: 'en',
     interpolation: {
       escapeValue: false,
     },
     detection: {
-      order: ['localStorage', 'navigator'],
+      order: ['localStorage'],
       caches: ['localStorage'],
     },
   })

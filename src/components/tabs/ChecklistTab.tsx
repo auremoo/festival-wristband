@@ -54,7 +54,7 @@ export default function ChecklistTab({ festival }: { festival: Festival }) {
   }
 
   function reset() {
-    updateFestival(festival.id, (f) => ({ ...f, checklist: createChecklist(f.type, t) }))
+    updateFestival(festival.id, (f) => ({ ...f, checklist: createChecklist(f.type) }))
     setConfirmReset(false)
   }
 
@@ -98,25 +98,28 @@ export default function ChecklistTab({ festival }: { festival: Festival }) {
             {t(`checklist.groups.${group}`)}
           </h3>
           <div className="overflow-hidden rounded-2xl border border-border bg-surface-card divide-y divide-border">
-            {items.map((item) => (
-              <div key={item.id} className="flex items-center gap-3 p-3.5">
-                <button
-                  onClick={() => toggle(item.id)}
-                  className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md border-2 transition-colors ${
-                    item.checked ? 'border-accent bg-accent text-on-accent' : 'border-border text-transparent'
-                  }`}
-                  aria-label={item.label}
-                >
-                  <CheckIcon size={15} />
-                </button>
-                <span className={`flex-1 text-sm ${item.checked ? 'text-text-muted line-through' : 'text-text-primary'}`}>
-                  {item.label}
-                </span>
-                <button onClick={() => remove(item.id)} className="p-1 text-text-muted hover:text-red-400">
-                  <TrashIcon size={16} />
-                </button>
-              </div>
-            ))}
+            {items.map((item) => {
+              const label = item.key ? t(`checklist.items.${item.key}`) : (item.label ?? '')
+              return (
+                <div key={item.id} className="flex items-center gap-3 p-3.5">
+                  <button
+                    onClick={() => toggle(item.id)}
+                    className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md border-2 transition-colors ${
+                      item.checked ? 'border-accent bg-accent text-on-accent' : 'border-border text-transparent'
+                    }`}
+                    aria-label={label}
+                  >
+                    <CheckIcon size={15} />
+                  </button>
+                  <span className={`flex-1 text-sm ${item.checked ? 'text-text-muted line-through' : 'text-text-primary'}`}>
+                    {label}
+                  </span>
+                  <button onClick={() => remove(item.id)} className="p-1 text-text-muted hover:text-red-400">
+                    <TrashIcon size={16} />
+                  </button>
+                </div>
+              )
+            })}
           </div>
         </div>
       ))}

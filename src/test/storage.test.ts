@@ -33,4 +33,18 @@ describe('storage parsing', () => {
     const reparsed = parseData(exportJSON(original))
     expect(reparsed.festivals[0].accentColor).toBe('#c1121f')
   })
+
+  it('round-trips the language setting', () => {
+    const data = parseData(JSON.stringify({ festivals: [], settings: { language: 'fr' } }))
+    expect(data.settings?.language).toBe('fr')
+    const reparsed = parseData(exportJSON(data))
+    expect(reparsed.settings?.language).toBe('fr')
+  })
+
+  it('preserves keyed checklist items on import', () => {
+    const data = parseData(
+      JSON.stringify({ festivals: [{ id: 'a', name: 'X', checklist: [{ id: 'c1', key: 'tent', checked: true, group: 'camping' }] }] }),
+    )
+    expect(data.festivals[0].checklist[0].key).toBe('tent')
+  })
 })

@@ -141,7 +141,7 @@ export default function FestivalForm() {
         ...base,
         notes: '',
         timetable: [],
-        checklist: createChecklist(type, t),
+        checklist: createChecklist(type),
         budget: [],
         noteEntries: [],
         photos: [],

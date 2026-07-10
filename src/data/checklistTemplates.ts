@@ -64,17 +64,14 @@ export function templateFor(type: FestivalType): ChecklistTemplateItem[] {
 }
 
 /**
- * Build the concrete checklist for a festival type, resolving each template key
- * to a label via the provided translate function. Labels are stored resolved so
- * user-added custom items (free text) and template items live together.
+ * Build the concrete checklist for a festival type. Template items store an
+ * i18n `key` (resolved to the active language at render time, so they stay
+ * bilingual); custom items added later store a free-text `label` instead.
  */
-export function createChecklist(
-  type: FestivalType,
-  t: (key: string) => string,
-): ChecklistItem[] {
+export function createChecklist(type: FestivalType): ChecklistItem[] {
   return templateFor(type).map((item) => ({
     id: uuid(),
-    label: t(`checklist.items.${item.key}`),
+    key: item.key,
     checked: false,
     group: item.group,
   }))

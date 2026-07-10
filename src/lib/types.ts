@@ -22,7 +22,10 @@ export interface SetEntry {
 
 export interface ChecklistItem {
   id: string
-  label: string
+  /** i18n key for template items (resolved to the active language at render). */
+  key?: string
+  /** Free-text label for custom items (used when there is no `key`). */
+  label?: string
   checked: boolean
   /** Optional grouping key from the template (e.g. "essentials", "camping"). */
   group?: string
@@ -85,7 +88,13 @@ export interface Festival {
 
 export const CURRENT_DATA_VERSION = 1
 
+/** App-level preferences, persisted in the JSON store so they travel with a backup. */
+export interface AppSettings {
+  language?: string // 'en' | 'fr'
+}
+
 export interface StoredData {
   version: number
   festivals: Festival[]
+  settings?: AppSettings
 }

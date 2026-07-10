@@ -4,7 +4,6 @@ import PageShell from '../components/PageShell'
 import { DownloadIcon, UploadIcon, TrashIcon, TicketIcon, CheckIcon } from '../components/Icons'
 import { useFestivals } from '../contexts/FestivalsContext'
 import { loadDataSafeConfig, saveDataSafeConfig, exportData as pushExport, type DataSafeConfig } from '../lib/dataSafe'
-import { CURRENT_DATA_VERSION, type StoredData } from '../lib/types'
 
 const languages = [
   { code: 'fr', label: 'Français' },
@@ -13,7 +12,7 @@ const languages = [
 
 export default function Settings() {
   const { t, i18n } = useTranslation()
-  const { festivals, importData, resetAll } = useFestivals()
+  const { festivals, importData, resetAll, exportPayload, setLanguage } = useFestivals()
   const fileRef = useRef<HTMLInputElement>(null)
   const [importMsg, setImportMsg] = useState<{ ok: boolean; text: string } | null>(null)
   const [confirmReset, setConfirmReset] = useState(false)
@@ -36,8 +35,7 @@ export default function Settings() {
   async function download() {
     setExporting(true)
     setExportMsg(null)
-    const data: StoredData = { version: CURRENT_DATA_VERSION, festivals }
-    const result = await pushExport(data)
+    const result = await pushExport(exportPayload())
     setExporting(false)
     if (result.mode === 'datasafe') {
       setExportMsg({ ok: true, text: t('settings.dataSafe.pushSuccess', { slug: result.result.slug, versions: result.result.versions }) })
@@ -79,7 +77,7 @@ export default function Settings() {
               return (
                 <button
                   key={lang.code}
-                  onClick={() => i18n.changeLanguage(lang.code)}
+                  onClick={() => setLanguage(lang.code)}
                   className={`flex w-full items-center justify-between p-4 text-sm transition-colors hover:bg-surface-alt ${active ? 'text-accent' : 'text-text-primary'}`}
                 >
                   <span>{lang.label}</span>

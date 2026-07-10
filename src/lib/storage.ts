@@ -70,9 +70,13 @@ export function parseData(json: string): StoredData {
   const festivals = rawFestivals
     .map(normalizeFestival)
     .filter((f): f is Festival => f !== null)
+  const rawSettings = (source.settings ?? {}) as Record<string, unknown>
+  const settings =
+    typeof rawSettings.language === 'string' ? { language: rawSettings.language } : undefined
   return {
     version: CURRENT_DATA_VERSION,
     festivals,
+    settings,
   }
 }
 
@@ -98,7 +102,7 @@ export function saveData(data: StoredData): void {
 /** Pretty-printed JSON blob for backup/download. */
 export function exportJSON(data: StoredData): string {
   return JSON.stringify(
-    { version: CURRENT_DATA_VERSION, festivals: data.festivals },
+    { version: CURRENT_DATA_VERSION, festivals: data.festivals, settings: data.settings },
     null,
     2,
   )

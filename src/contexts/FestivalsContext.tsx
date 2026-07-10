@@ -16,7 +16,8 @@ import {
 } from '../lib/storage'
 import { applyAccent } from '../lib/accent'
 import { statusOf } from '../lib/festival'
-import type { Festival, StoredData } from '../lib/types'
+import i18n from '../i18n'
+import type { AppSettings, Festival, StoredData } from '../lib/types'
 
 interface FestivalsContextValue {
   festivals: Festival[]
@@ -26,9 +27,13 @@ interface FestivalsContextValue {
   addFestival: (f: Festival) => void
   updateFestival: (id: string, patch: Partial<Festival> | ((f: Festival) => Festival)) => void
   removeFestival: (id: string) => void
+  /** The full store snapshot (festivals + settings), for export. */
+  exportPayload: () => StoredData
   exportData: () => string
   importData: (json: string) => { ok: true; count: number } | { ok: false; error: string }
   resetAll: () => void
+  settings: AppSettings
+  setLanguage: (lang: string) => void
 }
 
 const FestivalsContext = createContext<FestivalsContextValue | null>(null)
@@ -41,6 +46,14 @@ export function FestivalsProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     saveData(data)
   }, [data])
+
+  // Apply the stored language preference (source of truth = the JSON store).
+  const storedLang = data.settings?.language
+  useEffect(() => {
+    if (storedLang && !i18n.language.startsWith(storedLang)) {
+      i18n.changeLanguage(storedLang)
+    }
+  }, [storedLang])
 
   const activeFestival = useMemo(() => {
     return data.festivals.find((f) => statusOf(f) === 'live') ?? null
@@ -66,6 +79,7 @@ export function FestivalsProvider({ children }: { children: ReactNode }) {
       })),
     removeFestival: (id) =>
       setData((d) => ({ ...d, festivals: d.festivals.filter((f) => f.id !== id) })),
+    exportPayload: () => data,
     exportData: () => exportJSON(data),
     importData: (json) => {
       try {
@@ -78,7 +92,12 @@ export function FestivalsProvider({ children }: { children: ReactNode }) {
     },
     resetAll: () => {
       clearData()
-      setData({ version: 1, festivals: [] })
+      setData((d) => ({ version: 1, festivals: [], settings: d.settings }))
+    },
+    settings: data.settings ?? {},
+    setLanguage: (lang) => {
+      i18n.changeLanguage(lang)
+      setData((d) => ({ ...d, settings: { ...d.settings, language: lang } }))
     },
   }), [data, activeFestival])
 

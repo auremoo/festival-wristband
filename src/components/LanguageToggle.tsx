@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { useFestivals } from '../contexts/FestivalsContext'
 
 const languages = [
   { code: 'fr', label: 'FR' },
@@ -7,6 +8,7 @@ const languages = [
 
 export default function LanguageToggle() {
   const { i18n } = useTranslation()
+  const { setLanguage } = useFestivals()
   const current = i18n.language.startsWith('fr') ? 'fr' : 'en'
 
   return (
@@ -14,7 +16,7 @@ export default function LanguageToggle() {
       {languages.map((lang) => (
         <button
           key={lang.code}
-          onClick={() => i18n.changeLanguage(lang.code)}
+          onClick={() => setLanguage(lang.code)}
           className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider transition-colors ${
             current === lang.code
               ? 'bg-accent text-on-accent'

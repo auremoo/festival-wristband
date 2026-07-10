@@ -1,0 +1,31 @@
+{
+  "name": "Festival Wristband",
+  "short_name": "Festival Wristband",
+  "description": "Your personal multi-festival companion — countdown, checklist, budget, weather, timetable and map. Works offline.",
+  "start_url": "/festival-wristband/",
+  "scope": "/festival-wristband/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/festival-wristband/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/festival-wristband/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/festival-wristband/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

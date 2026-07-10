@@ -1,0 +1,278 @@
+{
+  "app": {
+    "tagline": "Un bracelet. Tous tes festivals."
+  },
+  "common": {
+    "back": "Retour",
+    "reload": "Recharger",
+    "pageError": "Cette page n'a pas pu se charger.",
+    "add": "Ajouter",
+    "addFestival": "Ajouter un festival",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "edit": "Modifier",
+    "delete": "Supprimer"
+  },
+  "nav": {
+    "dashboard": "Accueil",
+    "festivals": "Festivals",
+    "map": "Carte",
+    "history": "Historique",
+    "settings": "Réglages"
+  },
+  "status": {
+    "live": "En cours",
+    "upcoming": "À venir",
+    "past": "Passé"
+  },
+  "type": {
+    "all": "Tous",
+    "camping": "Camping",
+    "day": "Journée",
+    "urban": "Urbain"
+  },
+  "filter": {
+    "all": "Tous",
+    "upcoming": "À venir",
+    "live": "En cours",
+    "past": "Passés"
+  },
+  "countdown": {
+    "title": "Compte à rebours",
+    "live": "C'est parti !",
+    "liveSub": "{{name}} a lieu en ce moment même.",
+    "past": "Ce festival est terminé.",
+    "days": "Jours",
+    "hours": "Hres",
+    "minutes": "Min",
+    "seconds": "Sec"
+  },
+  "dashboard": {
+    "liveNow": "En cours",
+    "liveBanner": "Tu es à {{name}} !",
+    "liveTap": "Touche pour ouvrir ton espace festival.",
+    "nextUp": "Prochain",
+    "upcoming": "À venir",
+    "viewAll": "Tout voir",
+    "stats": {
+      "attended": "Faits",
+      "countries": "Pays",
+      "km": "Parcourus"
+    },
+    "empty": {
+      "title": "Ton pass est vide",
+      "body": "Ajoute ton premier festival pour suivre comptes à rebours, budgets, préparation et souvenirs.",
+      "cta": "Ajouter un festival"
+    }
+  },
+  "festivals": {
+    "title": "Festivals",
+    "count": "{{count}} festival",
+    "count_other": "{{count}} festivals",
+    "emptyAll": "Aucun festival pour l'instant. Ajoute le premier !",
+    "emptyFiltered": "Aucun festival ne correspond à ces filtres."
+  },
+  "form": {
+    "newTitle": "Nouveau festival",
+    "editTitle": "Modifier le festival",
+    "preview": "Aperçu",
+    "previewName": "Nom du festival",
+    "name": "Nom",
+    "edition": "Édition",
+    "startDate": "Date de début",
+    "endDate": "Date de fin",
+    "city": "Ville",
+    "country": "Pays",
+    "lat": "Latitude",
+    "lon": "Longitude",
+    "coordsHint": "Les coordonnées sont facultatives — elles placent le festival sur la carte. Trouve-les sur une appli de cartes.",
+    "type": "Type",
+    "typeHint": "Définit la checklist de préparation par défaut.",
+    "accentColor": "Couleur d'accent",
+    "genres": "Genres",
+    "genrePlaceholder": "metal, techno…",
+    "budgetTarget": "Budget cible (€)",
+    "links": "Liens",
+    "linkLabel": "Libellé (ex. Site officiel)",
+    "attended": "J'ai fait ce festival",
+    "rating": "Note",
+    "create": "Créer le festival",
+    "errorName": "Merci de saisir un nom.",
+    "errorDate": "Merci d'indiquer une date de début."
+  },
+  "detail": {
+    "notFound": "Ce festival n'existe plus.",
+    "backToList": "Retour aux festivals",
+    "deleteTitle": "Supprimer le festival ?",
+    "deleteBody": "« {{name}} » et toutes ses données seront définitivement supprimés.",
+    "deleteConfirm": "Supprimer"
+  },
+  "tabs": {
+    "overview": "Aperçu",
+    "checklist": "Checklist",
+    "budget": "Budget",
+    "weather": "Météo",
+    "timetable": "Horaires",
+    "notes": "Notes"
+  },
+  "overview": {
+    "duration": "Durée",
+    "days": "{{count}} jour",
+    "days_other": "{{count}} jours",
+    "checklist": "Checklist",
+    "packed": "préparé",
+    "budget": "Dépensé",
+    "ofTarget": "sur {{target}}",
+    "location": "Lieu",
+    "rating": "Ta note",
+    "notRated": "Pas encore noté",
+    "genres": "Genres",
+    "links": "Liens"
+  },
+  "checklist": {
+    "progress": "{{checked}} sur {{total}} préparés",
+    "addPlaceholder": "Ajouter un élément…",
+    "reset": "Réinitialiser",
+    "resetConfirm": "Remplacer toute la checklist par le modèle par défaut pour ce type de festival ?",
+    "empty": "Aucun élément. Ajoute quelque chose ou réinitialise le modèle.",
+    "groups": {
+      "essentials": "Essentiels",
+      "camping": "Camping",
+      "comfort": "Confort",
+      "transport": "Transport",
+      "urban": "Ville & logement",
+      "custom": "Mes éléments"
+    },
+    "items": {
+      "ticket": "Billet / pass festival",
+      "id": "Pièce d'identité / passeport",
+      "phone": "Téléphone",
+      "powerbank": "Batterie externe",
+      "cash": "Espèces",
+      "bankCard": "Carte bancaire",
+      "earplugs": "Bouchons d'oreilles",
+      "sunscreen": "Crème solaire",
+      "meds": "Médicaments personnels",
+      "tent": "Tente",
+      "sleepingBag": "Sac de couchage",
+      "sleepingMat": "Matelas / tapis de sol",
+      "pillow": "Oreiller",
+      "headlamp": "Lampe frontale / torche",
+      "campingChair": "Chaise de camping",
+      "coolerBox": "Glacière",
+      "trashBags": "Sacs poubelle",
+      "toiletPaper": "Papier toilette",
+      "wetWipes": "Lingettes",
+      "towel": "Serviette",
+      "toiletries": "Trousse de toilette",
+      "rainJacket": "Veste de pluie / poncho",
+      "warmLayer": "Couche chaude pour la nuit",
+      "flipFlops": "Tongs",
+      "reusableBottle": "Gourde réutilisable",
+      "hat": "Chapeau / casquette",
+      "snacks": "En-cas",
+      "hotelBooking": "Réservation d'hôtel",
+      "transportPass": "Pass transports",
+      "transportTickets": "Billets train / avion",
+      "comfortableShoes": "Chaussures confortables",
+      "dayBag": "Sac de journée"
+    }
+  },
+  "budget": {
+    "total": "Total dépensé",
+    "target": "Cible",
+    "remaining": "{{amount}} restants sur {{target}}",
+    "over": "{{amount}} au-dessus du budget",
+    "noTarget": "Aucun budget cible défini.",
+    "breakdown": "Par catégorie",
+    "addEntry": "Ajouter une dépense",
+    "label": "C'était quoi ?",
+    "amount": "Montant (€)",
+    "empty": "Aucune dépense enregistrée.",
+    "cat": {
+      "tickets": "Billets",
+      "accommodation": "Hébergement",
+      "transport": "Transport",
+      "food": "Nourriture & boissons",
+      "merch": "Merch",
+      "misc": "Divers"
+    }
+  },
+  "weather": {
+    "noCoords": "Ajoute des coordonnées à ce festival pour voir sa météo.",
+    "now": "Maintenant à {{city}}",
+    "loading": "Chargement des prévisions…",
+    "error": "Impossible de charger la météo. Vérifie ta connexion.",
+    "pastNote": "Ce festival est terminé — conditions actuelles sur le lieu.",
+    "unlocks": "Prévisions disponibles dans {{days}} jours",
+    "unlocksNote": "Une prévision précise à 16 jours apparaît à l'approche du festival.",
+    "liveForecast": "Prévisions en direct pour les jours du festival",
+    "noDays": "Aucune prévision disponible pour ces dates.",
+    "wind": "Vent {{speed}} km/h",
+    "rainAdvice": "Pluie probable — prends un poncho ou une veste imperméable.",
+    "codes": {
+      "clear": "Ciel dégagé",
+      "mainlyClear": "Plutôt dégagé",
+      "partlyCloudy": "Partiellement nuageux",
+      "overcast": "Couvert",
+      "fog": "Brouillard",
+      "drizzle": "Bruine légère",
+      "rain": "Pluie",
+      "snow": "Neige",
+      "showers": "Averses",
+      "thunderstorm": "Orage",
+      "unknown": "Inconnu"
+    }
+  },
+  "timetable": {
+    "import": "Importer un fichier",
+    "paste": "Coller du JSON",
+    "add": "Ajouter un set",
+    "schema": "[{\"artist\":\"…\",\"stage\":\"…\",\"day\":\"2026-06-19\",\"startTime\":\"21:00\",\"endTime\":\"22:30\"}]",
+    "replace": "Importer & remplacer",
+    "artist": "Artiste",
+    "stage": "Scène",
+    "importError": "JSON illisible. Vérifie le format.",
+    "emptyTitle": "Pas encore d'horaires",
+    "importInstructions": "Importe un fichier JSON ou colle ta programmation. Chaque set a besoin d'un artiste, d'une scène, d'un jour et d'horaires de début/fin.",
+    "allDays": "Tous les jours",
+    "conflict": "Chevauche un autre set",
+    "noEntriesDay": "Aucun set ce jour-là.",
+    "clear": "Effacer les horaires"
+  },
+  "notes": {
+    "placeholder": "Note un souvenir, un plan, un rappel…",
+    "add": "Ajouter une note",
+    "empty": "Pas encore de notes. Ton journal de festival commence ici."
+  },
+  "map": {
+    "count": "{{count}} festival sur la carte",
+    "count_other": "{{count}} festivals sur la carte",
+    "empty": "Aucun festival n'a de coordonnées. Ajoutes-en pour les voir ici."
+  },
+  "history": {
+    "title": "Historique",
+    "subtitle": "{{count}} festival fait",
+    "subtitle_other": "{{count}} festivals faits",
+    "empty": "Aucun festival fait pour l'instant. Marque un festival comme fait pour construire ta timeline."
+  },
+  "settings": {
+    "title": "Réglages",
+    "stored": "{{count}} festival enregistré sur cet appareil",
+    "stored_other": "{{count}} festivals enregistrés sur cet appareil",
+    "language": "Langue",
+    "data": "Données",
+    "export": "Exporter les données",
+    "exportDesc": "Télécharge tout dans une sauvegarde JSON.",
+    "import": "Importer des données",
+    "importDesc": "Restaure depuis une sauvegarde JSON (remplace les données actuelles).",
+    "importSuccess": "{{count}} festivals importés.",
+    "importError": "Échec de l'import — fichier invalide.",
+    "dangerZone": "Zone de danger",
+    "reset": "Tout réinitialiser",
+    "resetDesc": "Supprime tous les festivals de cet appareil.",
+    "resetConfirm": "Ceci supprime définitivement tous tes festivals. Action irréversible.",
+    "about": "À propos",
+    "aboutDesc": "Ton compagnon de festival personnel, hors-ligne d'abord. Toutes les données restent sur ton appareil."
+  }
+}

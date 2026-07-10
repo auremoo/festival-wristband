@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+@theme {
+  /* Surfaces — dark theme only, festival-night aesthetic (bg near-black base) */
+  --color-surface: #0a0a0a;
+  --color-surface-alt: #141414;
+  --color-surface-card: #1a1a1a;
+  --color-surface-elevated: #242424;
+
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-hover: rgba(255, 255, 255, 0.22);
+
+  --color-text-primary: #fafafa;
+  --color-text-secondary: #a3a3a3;
+  --color-text-muted: #6b6b6b;
+
+  /* Accent — dynamic. Defaults to a neutral warm white (no active festival).
+     Overridden at runtime per active/viewed festival via applyAccent() in lib/accent.ts.
+     Because Tailwind 4 compiles `bg-accent/10` to color-mix on this var, every tint
+     tracks the override automatically. */
+  --color-accent: #e7e5e4;
+  --color-on-accent: #0a0a0a;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  overscroll-behavior: none;
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+#root {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Desktop: center the app in a phone-width column */
+@media (min-width: 768px) {
+  body {
+    background-color: #050505;
+  }
+  #root {
+    max-width: 430px;
+    margin: 0 auto;
+    border-left: 1px solid rgba(255, 255, 255, 0.06);
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    background-color: var(--color-surface);
+    box-shadow: 0 0 80px rgba(0, 0, 0, 0.7);
+  }
+}
+
+/* Editorial heading — bold, uppercase, tight tracking */
+.pass-heading {
+  text-transform: uppercase;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+/* Accent underline bar */
+.accent-line {
+  width: 40px;
+  height: 3px;
+  background: var(--color-accent);
+}
+
+/* Glow using the live accent var */
+.accent-glow {
+  box-shadow: 0 0 24px -4px var(--color-accent);
+}
+
+/* Subtle noise texture overlay */
+.noise-bg {
+  position: relative;
+}
+.noise-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Live festival pulse (used on banners + map dots) */
+@keyframes pass-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+.animate-pass-pulse {
+  animation: pass-pulse 1.8s ease-in-out infinite;
+}
+
+/* Map glowing dot */
+.pass-map-dot {
+  border-radius: 9999px;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.4);
+}
+.pass-map-dot.is-live {
+  animation: pass-map-glow 1.6s ease-in-out infinite;
+}
+@keyframes pass-map-glow {
+  0%, 100% { box-shadow: 0 0 4px 1px currentColor, 0 0 0 2px rgba(0,0,0,0.4); }
+  50% { box-shadow: 0 0 14px 5px currentColor, 0 0 0 2px rgba(0,0,0,0.4); }
+}
+
+/* Leaflet dark popup theming */
+.leaflet-container {
+  background: #0a0a0a;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: #1a1a1a;
+  color: #fafafa;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+}
+.leaflet-popup-content {
+  margin: 12px 14px;
+}
+.leaflet-container a.leaflet-popup-close-button {
+  color: #a3a3a3;
+}
+.leaflet-control-attribution {
+  background: rgba(0, 0, 0, 0.6) !important;
+  color: #6b6b6b !important;
+}
+.leaflet-control-attribution a {
+  color: #a3a3a3 !important;
+}
+.leaflet-bar a {
+  background: #1a1a1a !important;
+  color: #fafafa !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}

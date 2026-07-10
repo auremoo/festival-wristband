@@ -3,7 +3,13 @@ import { useTranslation } from 'react-i18next'
 import PageShell from '../components/PageShell'
 import { DownloadIcon, UploadIcon, TrashIcon, TicketIcon, CheckIcon } from '../components/Icons'
 import { useFestivals } from '../contexts/FestivalsContext'
-import { loadDataSafeConfig, saveDataSafeConfig, exportData as pushExport, type DataSafeConfig } from '../lib/dataSafe'
+import {
+  loadDataSafeConfig,
+  saveDataSafeConfig,
+  restoreDataSafeConfigFromImport,
+  exportData as pushExport,
+  type DataSafeConfig,
+} from '../lib/dataSafe'
 
 const languages = [
   { code: 'fr', label: 'Français' },
@@ -49,9 +55,14 @@ export default function Settings() {
     if (!file) return
     const reader = new FileReader()
     reader.onload = () => {
-      const result = importData(String(reader.result))
-      if (result.ok) setImportMsg({ ok: true, text: t('settings.importSuccess', { count: result.count }) })
-      else setImportMsg({ ok: false, text: t('settings.importError') })
+      const raw = String(reader.result)
+      const result = importData(raw)
+      if (result.ok) {
+        setImportMsg({ ok: true, text: t('settings.importSuccess', { count: result.count }) })
+        if (restoreDataSafeConfigFromImport(raw)) setDataSafe(loadDataSafeConfig())
+      } else {
+        setImportMsg({ ok: false, text: t('settings.importError') })
+      }
     }
     reader.readAsText(file)
     e.target.value = ''

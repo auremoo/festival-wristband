@@ -39,6 +39,27 @@ export function saveDataSafeConfig(config: DataSafeConfig): void {
   localStorage.setItem(DATASAFE_CONFIG_KEY, JSON.stringify(config))
 }
 
+/**
+ * Restores the DataSafe config (url/apiKey/appName) from a previously
+ * exported backup's `_datasafe` block, so re-importing a backup lets you
+ * push again without re-entering the configuration.
+ */
+export function restoreDataSafeConfigFromImport(json: string): boolean {
+  try {
+    const parsed = JSON.parse(json) as Record<string, unknown>
+    const block = parsed._datasafe as Record<string, unknown> | undefined
+    if (!block || typeof block !== 'object') return false
+    const url = typeof block.url === 'string' ? block.url : ''
+    const apiKey = typeof block.apiKey === 'string' ? block.apiKey : ''
+    const appName = typeof block.appName === 'string' ? block.appName : ''
+    if (!url && !apiKey && !appName) return false
+    saveDataSafeConfig({ url, apiKey, appName })
+    return true
+  } catch {
+    return false
+  }
+}
+
 function isConfigured(config: DataSafeConfig): boolean {
   return Boolean(config.url && config.apiKey && config.appName)
 }

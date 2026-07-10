@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { statusOf, durationDays, festivalDays } from '../lib/festival'
+import { statusOf, durationDays, festivalDays, attendanceSummary } from '../lib/festival'
 import type { Festival } from '../lib/types'
 
 function make(start: string, end: string): Festival {
@@ -8,7 +8,7 @@ function make(start: string, end: string): Festival {
     dates: { start, end },
     location: { city: '', country: '', lat: 0, lon: 0 },
     type: 'camping', accentColor: '#fff', genres: [],
-    attended: false, rating: null, notes: '',
+    attended: false, attendedDays: [], rating: null, notes: '',
     timetable: [], checklist: [], budget: [], budgetTarget: null,
     noteEntries: [], links: [], photos: [], createdAt: '2026-01-01T00:00:00Z',
   }
@@ -42,5 +42,26 @@ describe('duration + days', () => {
     expect(festivalDays(make('2026-06-19', '2026-06-21'))).toEqual([
       '2026-06-19', '2026-06-20', '2026-06-21',
     ])
+  })
+})
+
+describe('attendance summary', () => {
+  it('reports full attendance when no specific days are set', () => {
+    const f = { ...make('2026-06-19', '2026-06-21'), attended: true }
+    const att = attendanceSummary(f)
+    expect(att).toMatchObject({ full: true, count: 3, total: 3 })
+  })
+
+  it('reports a partial subset of days', () => {
+    const f = { ...make('2026-06-19', '2026-06-21'), attended: true, attendedDays: ['2026-06-19', '2026-06-20'] }
+    const att = attendanceSummary(f)
+    expect(att.full).toBe(false)
+    expect(att.count).toBe(2)
+    expect(att.total).toBe(3)
+  })
+
+  it('ignores attended days outside the festival range', () => {
+    const f = { ...make('2026-06-19', '2026-06-21'), attended: true, attendedDays: ['2020-01-01'] }
+    expect(attendanceSummary(f).count).toBe(0)
   })
 })

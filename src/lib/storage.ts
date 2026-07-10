@@ -38,6 +38,9 @@ function normalizeFestival(raw: unknown): Festival | null {
     accentColor: typeof f.accentColor === 'string' ? f.accentColor : '#e7e5e4',
     genres: Array.isArray(f.genres) ? (f.genres as unknown[]).filter((g): g is string => typeof g === 'string') : [],
     attended: f.attended === true,
+    attendedDays: Array.isArray(f.attendedDays)
+      ? (f.attendedDays as unknown[]).filter((d): d is string => typeof d === 'string')
+      : [],
     rating: typeof f.rating === 'number' ? f.rating : null,
     notes: typeof f.notes === 'string' ? f.notes : '',
     timetable: Array.isArray(f.timetable) ? (f.timetable as Festival['timetable']) : [],

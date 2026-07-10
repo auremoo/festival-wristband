@@ -95,6 +95,8 @@
     "links": "Links",
     "linkLabel": "Label (e.g. Official site)",
     "attended": "I attended this festival",
+    "attendedDays": "Days attended",
+    "attendedDaysHint": "Tap to deselect the days you missed. All selected = full festival.",
     "rating": "Rating",
     "create": "Create festival",
     "errorName": "Please enter a name.",
@@ -124,10 +126,15 @@
     "budget": "Spent",
     "ofTarget": "of {{target}}",
     "location": "Location",
+    "attendance": "Attendance",
     "rating": "Your rating",
     "notRated": "Not rated yet",
     "genres": "Genres",
     "links": "Links"
+  },
+  "attendance": {
+    "full": "Full festival",
+    "partial": "{{count}}/{{total}} days"
   },
   "checklist": {
     "progress": "{{checked}} of {{total}} packed",

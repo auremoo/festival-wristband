@@ -3,8 +3,8 @@ import CountdownTimer from '../CountdownTimer'
 import StatTile from '../StatTile'
 import RatingStars from '../RatingStars'
 import { MapPinIcon, CalendarIcon, ClipboardIcon, WalletIcon, ExternalLinkIcon } from '../Icons'
-import { durationDays, totalBudget, statusOf } from '../../lib/festival'
-import { formatMoney } from '../../lib/format'
+import { durationDays, totalBudget, statusOf, attendanceSummary } from '../../lib/festival'
+import { formatMoney, formatDay } from '../../lib/format'
 import type { Festival } from '../../lib/types'
 
 export default function OverviewTab({ festival }: { festival: Festival }) {
@@ -48,6 +48,30 @@ export default function OverviewTab({ festival }: { festival: Festival }) {
           <p className="text-[11px] text-text-muted">{festival.location.country}</p>
         </div>
       </div>
+
+      {/* Attendance (attended) */}
+      {festival.attended && (() => {
+        const att = attendanceSummary(festival)
+        return (
+          <div className="rounded-2xl border border-border bg-surface-card p-4">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-text-secondary">{t('overview.attendance')}</span>
+              <span className="text-sm font-semibold text-accent">
+                {att.full ? t('attendance.full') : t('attendance.partial', { count: att.count, total: att.total })}
+              </span>
+            </div>
+            {!att.full && att.days.length > 0 && (
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {att.days.map((d) => (
+                  <span key={d} className="rounded-full border border-border px-2.5 py-0.5 text-[11px] text-text-secondary">
+                    {formatDay(d, i18n.language)}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        )
+      })()}
 
       {/* Rating (attended) */}
       {festival.attended && (

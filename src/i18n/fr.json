@@ -95,6 +95,8 @@
     "links": "Liens",
     "linkLabel": "Libellé (ex. Site officiel)",
     "attended": "J'ai fait ce festival",
+    "attendedDays": "Jours de présence",
+    "attendedDaysHint": "Touche pour retirer les jours manqués. Tout sélectionné = festival complet.",
     "rating": "Note",
     "create": "Créer le festival",
     "errorName": "Merci de saisir un nom.",
@@ -124,10 +126,15 @@
     "budget": "Dépensé",
     "ofTarget": "sur {{target}}",
     "location": "Lieu",
+    "attendance": "Présence",
     "rating": "Ta note",
     "notRated": "Pas encore noté",
     "genres": "Genres",
     "links": "Liens"
+  },
+  "attendance": {
+    "full": "Festival complet",
+    "partial": "{{count}}/{{total}} jours"
   },
   "checklist": {
     "progress": "{{checked}} sur {{total}} préparés",

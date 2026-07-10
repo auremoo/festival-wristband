@@ -65,6 +65,9 @@ export interface Festival {
   accentColor: string // hex
   genres: string[]
   attended: boolean
+  /** Specific festival days actually attended (ISO dates). Empty = attended the
+      full run. Only meaningful when `attended` is true. */
+  attendedDays: string[]
   rating: number | null // 1-5
   /** Optional single free-text note (legacy field, kept for JSON compatibility). */
   notes: string

@@ -8,6 +8,8 @@ import { XIcon, ExternalLinkIcon } from '../components/Icons'
 import { useFestivals, uuid } from '../contexts/FestivalsContext'
 import { createChecklist } from '../data/checklistTemplates'
 import { applyAccent } from '../lib/accent'
+import { festivalDays } from '../lib/festival'
+import { formatDay } from '../lib/format'
 import type { Festival, FestivalLink, FestivalType } from '../lib/types'
 
 const PRESET_COLORS = [
@@ -20,7 +22,7 @@ const inputClass =
 const labelClass = 'mb-1.5 block text-xs font-semibold uppercase tracking-wider text-text-muted'
 
 export default function FestivalForm() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const navigate = useNavigate()
   const { id } = useParams()
   const { getFestival, addFestival, updateFestival, activeFestival } = useFestivals()
@@ -39,6 +41,7 @@ export default function FestivalForm() {
   const [genres, setGenres] = useState<string[]>(editing?.genres ?? [])
   const [genreInput, setGenreInput] = useState('')
   const [attended, setAttended] = useState(editing?.attended ?? false)
+  const [attendedDays, setAttendedDays] = useState<string[]>(editing?.attendedDays ?? [])
   const [rating, setRating] = useState<number | null>(editing?.rating ?? null)
   const [budgetTarget, setBudgetTarget] = useState(editing?.budgetTarget ? String(editing.budgetTarget) : '')
   const [links, setLinks] = useState<FestivalLink[]>(editing?.links ?? [])
@@ -68,6 +71,7 @@ export default function FestivalForm() {
       accentColor,
       genres,
       attended,
+      attendedDays,
       rating,
       notes: '',
       timetable: [],
@@ -79,8 +83,19 @@ export default function FestivalForm() {
       photos: [],
       createdAt: editing?.createdAt ?? new Date().toISOString(),
     }),
-    [editing, name, edition, start, end, city, country, lat, lon, type, accentColor, genres, attended, rating, t],
+    [editing, name, edition, start, end, city, country, lat, lon, type, accentColor, genres, attended, attendedDays, rating, t],
   )
+
+  // Festival days available for attendance selection (from the current dates).
+  const dayOptions = start ? festivalDays(preview) : []
+
+  function toggleAttendedDay(day: string) {
+    // Empty attendedDays means "full run" — expand to all days before toggling.
+    const current = attendedDays.length ? attendedDays : dayOptions
+    const next = current.includes(day) ? current.filter((d) => d !== day) : [...current, day]
+    // If every day is selected, collapse back to [] ("full").
+    setAttendedDays(next.length >= dayOptions.length ? [] : next.sort())
+  }
 
   function addGenre() {
     const g = genreInput.trim().toLowerCase()
@@ -111,6 +126,7 @@ export default function FestivalForm() {
       accentColor,
       genres,
       attended,
+      attendedDays: attended ? attendedDays : [],
       rating,
       budgetTarget: budgetTarget ? Number(budgetTarget) : null,
       links,
@@ -352,6 +368,29 @@ export default function FestivalForm() {
               <div className={`absolute top-1 h-5 w-5 rounded-full bg-white shadow transition-all ${attended ? 'left-6' : 'left-1'}`} />
             </div>
           </button>
+          {attended && dayOptions.length > 1 && (
+            <div className="mt-3 border-t border-border pt-3">
+              <p className="mb-1 text-sm text-text-secondary">{t('form.attendedDays')}</p>
+              <p className="mb-2 text-[11px] text-text-muted">{t('form.attendedDaysHint')}</p>
+              <div className="flex flex-wrap gap-1.5">
+                {dayOptions.map((d) => {
+                  const on = attendedDays.length === 0 || attendedDays.includes(d)
+                  return (
+                    <button
+                      key={d}
+                      type="button"
+                      onClick={() => toggleAttendedDay(d)}
+                      className={`rounded-full px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wide transition-colors ${
+                        on ? 'bg-accent text-on-accent' : 'border border-border text-text-muted'
+                      }`}
+                    >
+                      {formatDay(d, i18n.language)}
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+          )}
           {attended && (
             <div className="mt-3 flex items-center justify-between border-t border-border pt-3">
               <span className="text-sm text-text-secondary">{t('form.rating')}</span>

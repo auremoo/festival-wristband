@@ -5,7 +5,7 @@ import PageShell from '../components/PageShell'
 import RatingStars from '../components/RatingStars'
 import { HistoryIcon, MapPinIcon } from '../components/Icons'
 import { useFestivals } from '../contexts/FestivalsContext'
-import { byStartDateDesc } from '../lib/festival'
+import { byStartDateDesc, attendanceSummary } from '../lib/festival'
 import { formatDateRange, formatMonthYear } from '../lib/format'
 
 export default function History() {
@@ -61,6 +61,12 @@ export default function History() {
                   </p>
                   <p className="mt-0.5 text-xs text-text-muted">
                     {formatDateRange(f.dates.start, f.dates.end, i18n.language)}
+                    {(() => {
+                      const att = attendanceSummary(f)
+                      return att.full || att.total <= 1
+                        ? ''
+                        : ` · ${t('attendance.partial', { count: att.count, total: att.total })}`
+                    })()}
                   </p>
                   {f.rating && <RatingStars value={f.rating} size={15} className="mt-2" />}
                   {lastNote && (

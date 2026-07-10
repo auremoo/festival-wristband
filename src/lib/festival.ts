@@ -65,6 +65,26 @@ export function festivalDays(f: Festival): string[] {
   return days
 }
 
+/** Effective days attended: the explicit subset, or the full run when unspecified. */
+export function effectiveAttendedDays(f: Festival): string[] {
+  if (!f.attended) return []
+  const all = festivalDays(f)
+  if (!f.attendedDays.length) return all
+  return all.filter((d) => f.attendedDays.includes(d))
+}
+
+/** Summary of attendance for display. */
+export function attendanceSummary(f: Festival): {
+  full: boolean
+  count: number
+  total: number
+  days: string[]
+} {
+  const all = festivalDays(f)
+  const days = effectiveAttendedDays(f)
+  return { full: all.length > 0 && days.length >= all.length, count: days.length, total: all.length, days }
+}
+
 export function totalBudget(f: Festival): number {
   return f.budget.reduce((sum, e) => sum + (Number.isFinite(e.amount) ? e.amount : 0), 0)
 }

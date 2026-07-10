@@ -280,6 +280,15 @@
     "resetDesc": "Supprime tous les festivals de cet appareil.",
     "resetConfirm": "Ceci supprime définitivement tous tes festivals. Action irréversible.",
     "about": "À propos",
-    "aboutDesc": "Ton compagnon de festival personnel, hors-ligne d'abord. Toutes les données restent sur ton appareil."
+    "aboutDesc": "Ton compagnon de festival personnel, hors-ligne d'abord. Toutes les données restent sur ton appareil.",
+    "dataSafe": {
+      "title": "DataSafe",
+      "desc": "Optionnel : pousse ta sauvegarde vers ton DataSafe (PRP) personnel au lieu de la télécharger. Laisse vide pour continuer à télécharger en local.",
+      "url": "URL DataSafe",
+      "apiKey": "Clé API",
+      "appName": "Nom de l'app",
+      "exportDescConfigured": "Pousse une sauvegarde complète vers ton DataSafe configuré.",
+      "pushSuccess": "Poussé vers DataSafe ({{slug}}, {{versions}} version(s))."
+    }
   }
 }

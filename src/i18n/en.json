@@ -280,6 +280,15 @@
     "resetDesc": "Delete all festivals from this device.",
     "resetConfirm": "This permanently deletes all your festivals. This cannot be undone.",
     "about": "About",
-    "aboutDesc": "Your personal, offline-first festival companion. All data stays on your device."
+    "aboutDesc": "Your personal, offline-first festival companion. All data stays on your device.",
+    "dataSafe": {
+      "title": "DataSafe",
+      "desc": "Optional: push your backup to your personal DataSafe (PRP) instead of downloading it. Leave blank to keep downloading locally.",
+      "url": "DataSafe URL",
+      "apiKey": "API key",
+      "appName": "App name",
+      "exportDescConfigured": "Push a full backup to your configured DataSafe.",
+      "pushSuccess": "Pushed to DataSafe ({{slug}}, {{versions}} version(s))."
+    }
   }
 }

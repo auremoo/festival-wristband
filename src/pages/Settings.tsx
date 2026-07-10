@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next'
 import PageShell from '../components/PageShell'
 import { DownloadIcon, UploadIcon, TrashIcon, TicketIcon, CheckIcon } from '../components/Icons'
 import { useFestivals } from '../contexts/FestivalsContext'
+import { loadDataSafeConfig, saveDataSafeConfig, exportData as pushExport, type DataSafeConfig } from '../lib/dataSafe'
+import { CURRENT_DATA_VERSION, type StoredData } from '../lib/types'
 
 const languages = [
   { code: 'fr', label: 'Français' },
@@ -11,23 +13,37 @@ const languages = [
 
 export default function Settings() {
   const { t, i18n } = useTranslation()
-  const { festivals, exportData, importData, resetAll } = useFestivals()
+  const { festivals, importData, resetAll } = useFestivals()
   const fileRef = useRef<HTMLInputElement>(null)
   const [importMsg, setImportMsg] = useState<{ ok: boolean; text: string } | null>(null)
   const [confirmReset, setConfirmReset] = useState(false)
+  const [dataSafe, setDataSafe] = useState<DataSafeConfig>(() => loadDataSafeConfig())
+  const [exportMsg, setExportMsg] = useState<{ ok: boolean; text: string } | null>(null)
+  const [exporting, setExporting] = useState(false)
 
   useEffect(() => {
     document.title = `${t('nav.settings')} — Festival Wristband`
   }, [t])
 
-  function download() {
-    const blob = new Blob([exportData()], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `festival-wristband-${new Date().toISOString().slice(0, 10)}.json`
-    a.click()
-    URL.revokeObjectURL(url)
+  function updateDataSafe(patch: Partial<DataSafeConfig>) {
+    setDataSafe((prev) => {
+      const next = { ...prev, ...patch }
+      saveDataSafeConfig(next)
+      return next
+    })
+  }
+
+  async function download() {
+    setExporting(true)
+    setExportMsg(null)
+    const data: StoredData = { version: CURRENT_DATA_VERSION, festivals }
+    const result = await pushExport(data)
+    setExporting(false)
+    if (result.mode === 'datasafe') {
+      setExportMsg({ ok: true, text: t('settings.dataSafe.pushSuccess', { slug: result.result.slug, versions: result.result.versions }) })
+    } else {
+      setExportMsg(null)
+    }
   }
 
   function onImport(e: React.ChangeEvent<HTMLInputElement>) {
@@ -80,14 +96,22 @@ export default function Settings() {
           <div className="space-y-2.5">
             <button
               onClick={download}
-              className="flex w-full items-center gap-3 rounded-2xl border border-border bg-surface-card p-4 text-left transition-colors hover:bg-surface-alt"
+              disabled={exporting}
+              className="flex w-full items-center gap-3 rounded-2xl border border-border bg-surface-card p-4 text-left transition-colors hover:bg-surface-alt disabled:opacity-60"
             >
               <DownloadIcon size={20} className="text-accent" />
               <div>
                 <p className="text-sm font-medium text-text-primary">{t('settings.export')}</p>
-                <p className="text-xs text-text-muted">{t('settings.exportDesc')}</p>
+                <p className="text-xs text-text-muted">
+                  {dataSafe.url && dataSafe.apiKey && dataSafe.appName
+                    ? t('settings.dataSafe.exportDescConfigured')
+                    : t('settings.exportDesc')}
+                </p>
               </div>
             </button>
+            {exportMsg && (
+              <p className={`text-xs ${exportMsg.ok ? 'text-green-400' : 'text-red-400'}`}>{exportMsg.text}</p>
+            )}
 
             <button
               onClick={() => fileRef.current?.click()}
@@ -104,6 +128,45 @@ export default function Settings() {
             {importMsg && (
               <p className={`text-xs ${importMsg.ok ? 'text-green-400' : 'text-red-400'}`}>{importMsg.text}</p>
             )}
+          </div>
+        </section>
+
+        {/* DataSafe */}
+        <section>
+          <h2 className="pass-heading mb-2 text-xs tracking-wider text-text-muted">{t('settings.dataSafe.title')}</h2>
+          <div className="space-y-2.5 rounded-2xl border border-border bg-surface-card p-4">
+            <p className="text-xs text-text-muted">{t('settings.dataSafe.desc')}</p>
+            <div className="space-y-2">
+              <label className="block text-xs text-text-secondary">
+                {t('settings.dataSafe.url')}
+                <input
+                  type="url"
+                  value={dataSafe.url}
+                  onChange={(e) => updateDataSafe({ url: e.target.value })}
+                  placeholder="https://mon-domaine/api/data-safe/ingest"
+                  className="mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text-primary"
+                />
+              </label>
+              <label className="block text-xs text-text-secondary">
+                {t('settings.dataSafe.apiKey')}
+                <input
+                  type="password"
+                  value={dataSafe.apiKey}
+                  onChange={(e) => updateDataSafe({ apiKey: e.target.value })}
+                  className="mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text-primary"
+                />
+              </label>
+              <label className="block text-xs text-text-secondary">
+                {t('settings.dataSafe.appName')}
+                <input
+                  type="text"
+                  value={dataSafe.appName}
+                  onChange={(e) => updateDataSafe({ appName: e.target.value })}
+                  placeholder="festival-wristband"
+                  className="mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text-primary"
+                />
+              </label>
+            </div>
           </div>
         </section>
 

@@ -1,5 +1,8 @@
 # Festival Wristband 🎟️
 
+> Créé par Aurélien Moote - Moo - 2026. Logiciel libre (licence MIT) :
+> réutilisable à condition de conserver la mention de l'auteur.
+
 Your personal, offline-first companion for **every** festival you go to — one wristband for all of them.
 
 Track countdowns, packing checklists, budgets, weather, timetables and memories across
@@ -72,3 +75,8 @@ triggers [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).
 ## License
 
 MIT © 2026 Aurélien Moote
+
+## Auteur & licence
+
+Créé par Aurélien Moote - Moo - 2026. Logiciel libre (licence MIT) : réutilisable à
+condition de conserver la mention de l'auteur.

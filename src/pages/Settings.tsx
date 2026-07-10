@@ -97,7 +97,7 @@ export default function Settings() {
               disabled={exporting}
               className="flex w-full items-center gap-3 rounded-2xl border border-border bg-surface-card p-4 text-left transition-colors hover:bg-surface-alt disabled:opacity-60"
             >
-              <DownloadIcon size={20} className="text-accent" />
+              <UploadIcon size={20} className="text-accent" />
               <div>
                 <p className="text-sm font-medium text-text-primary">{t('settings.export')}</p>
                 <p className="text-xs text-text-muted">
@@ -115,7 +115,7 @@ export default function Settings() {
               onClick={() => fileRef.current?.click()}
               className="flex w-full items-center gap-3 rounded-2xl border border-border bg-surface-card p-4 text-left transition-colors hover:bg-surface-alt"
             >
-              <UploadIcon size={20} className="text-accent" />
+              <DownloadIcon size={20} className="text-accent" />
               <div>
                 <p className="text-sm font-medium text-text-primary">{t('settings.import')}</p>
                 <p className="text-xs text-text-muted">{t('settings.importDesc')}</p>
